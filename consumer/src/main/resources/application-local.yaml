@@ -1,0 +1,9 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: ${DS_URL}
+    username: ${DS_USR}
+    password: ${DS_PASS}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
