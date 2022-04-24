@@ -12,3 +12,5 @@ buildNumber.properties
 mvnw.cmd
 mvnw
 readme.md
+
+producer/producer-sqs.iml
