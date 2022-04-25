@@ -18,3 +18,5 @@ producer/producer-sqs.iml
 consumer/consumer-sqs.iml
 
 *.iml
+
+set-env.sh
