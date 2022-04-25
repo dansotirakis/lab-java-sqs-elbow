@@ -10,8 +10,9 @@ The main features of the project is its ability to isolate part of the operation
 - Consumer
 #### A relational database - mysql
 - ElbowDB
+`sudo docker-compose -f docker-compose-mysql.yml up`
 #### Queue SQS - FIFO
 - elbow.fifo
 
-
-
+## Resource
+> Set environment variables for this project using `set-env.sh` file on root directory and Run: `. set-env.sh`

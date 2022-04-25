@@ -4,9 +4,13 @@ This service receives notifications from the system related to update operations
 
 ## Requirements:
 ### Environment variable
-`export QUEUE_URL=Your_queue_url`
+    export QUEUE_URL=Your_queue_url;
+    export DS_URL=Your_db_url;
+    export DS_PASS=Your_db_pass;
+    export DS_USR=Your_db_user;
+
 ### AWS Credentials
-> In you directory root create (.aws) directory and put (credentials) file
+> In your root directory create the directory (.aws) and place the file (credentials) with the following content:
 ```
 [default]
 aws_access_key_id = your aws_access_key_id

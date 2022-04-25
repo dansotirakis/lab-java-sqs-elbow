@@ -1,0 +1,14 @@
+{
+    "book-id": {
+      "DataType": "Number.java.lang.Integer",
+      "StringValue": "1"
+    },
+    "contentType": {
+        "DataType": "String",
+        "StringValue": "application/json"
+    },
+    "timestamp": {
+        "DataType": "Number.java.lang.Long",
+        "StringValue": "1650850337744"
+    }
+}
