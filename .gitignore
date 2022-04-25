@@ -16,3 +16,5 @@ readme.md
 producer/producer-sqs.iml
 
 consumer/consumer-sqs.iml
+
+*.iml
