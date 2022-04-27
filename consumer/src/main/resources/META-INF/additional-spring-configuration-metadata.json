@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "aws.url.queue",
+      "type": "java.lang.String",
+      "description": "Description for aws.url.queue."
+  }
+] }

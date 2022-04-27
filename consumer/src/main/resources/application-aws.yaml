@@ -8,3 +8,6 @@ spring:
     url: ${DS_URL}
     username: ${DS_USR}
     password: ${DS_PASS}
+aws:
+  url:
+    queue: ${QUEUE_URL}

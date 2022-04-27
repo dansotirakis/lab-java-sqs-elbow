@@ -1,26 +1,42 @@
 # 📭 Consumer
 
-This service receives notifications from the system related to update operations its function is updated as information responsible for the requested book and sends the information of this operation to a KAFKA topic
-
-## Requirements:
-### Environment variable
-    export QUEUE_URL=Your_queue_url;
-    export DS_URL=Your_db_url;
-    export DS_PASS=Your_db_pass;
-    export DS_USR=Your_db_user;
-
-### AWS Credentials
-> In your root directory create the directory (.aws) and place the file (credentials) with the following content:
+> This service receives notifications from the system related to update operations its function is updated as information responsible for the requested book and sends the information of this operation to a KAFKA topic
+## Run - aws
+> Pre-configured credential AWS and configure your environment variables is required
+```shell
+export QUEUE_URL=""
+export DS_URL=""
+export DS_PASS=""
+export DS_USR=""
+mvn clean package 
+java -jar -Dspring.profiles.active=aws target/*.jar
 ```
-[default]
-aws_access_key_id = your aws_access_key_id
-aws_secret_access_key = your aws_secret_access_key
-```
-## Run
-> In you directory root for project with database up. run commands
-1. `mvn clean package`
-2. `java -jar -Dspring.profiles.active=env targe/*.jar`
 
-## Env files
-1. Local
-2. AWS
+## Run - localstack
+> Required database and localstack up
+```shell
+export AWS_SECRET_ACCESS_KEY="FAKE"
+export AWS_ACCESS_KEY_ID="FAKE"
+export AWS_DEFAULT_REGION=us-east-1
+export QUEUE_URL="http://127.0.0.1:4566/000000000000/elbow.fifo"
+export DS_URL="jdbc:mysql://127.0.0.1:3306/elbowdb"
+export DS_PASS="mauFJcuf5dhRMQrjj"
+export DS_USR="root"
+mvn clean package
+java -jar -Dspring.profiles.active=local target/*.jar
+```
+## CLI
+### Read queue
+```shell
+export AWS_SECRET_ACCESS_KEY="FAKE"
+export AWS_ACCESS_KEY_ID="FAKE"
+export AWS_DEFAULT_REGION=us-east-1
+aws --endpoint-url http://127.0.0.1:4566 sqs receive-message --queue-url http://127.0.0.1:4566/000000000000/elbow.fifo
+```
+### Purge queue
+```shell
+export AWS_SECRET_ACCESS_KEY="FAKE"
+export AWS_ACCESS_KEY_ID="FAKE"
+export AWS_DEFAULT_REGION=us-east-1
+aws --endpoint-url http://127.0.0.1:4566 sqs purge-queue --queue-url http://127.0.0.1:4566/000000000000/elbow.fifo
+```

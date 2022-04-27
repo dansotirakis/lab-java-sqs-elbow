@@ -7,6 +7,8 @@ spring:
     password: ${DS_PASS}
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: create
 aws:
   url:
     queue: ${QUEUE_URL}
