@@ -5,14 +5,16 @@ The project consists of an applied study of the use of SQS to provide a message 
 The main features of the project is its ability to isolate part of the operations of one service from another, which allows for greater adherence to event-oriented architecture design practices and facilitates the execution of audit procedures without overloading the operations.
 
 ### Phase 1:
-#### Two java applications - spring boot
+#### Apps
 - Producer
 - Consumer
-#### A relational database - mysql
-- ElbowDB
-`sudo docker-compose -f docker-compose-mysql.yml up`
-#### Queue SQS - FIFO
-- elbow.fifo
 
-## Resource
-> Set environment variables for this project using `set-env.sh` file on root directory and Run: `. set-env.sh`
+### Build LocalStack using Docker and Mysql and create queue with cli
+```shell
+sudo docker-compose -f docker-compose-localstack.yml up -d
+export AWS_SECRET_ACCESS_KEY="FAKE"
+export AWS_ACCESS_KEY_ID="FAKE"
+export AWS_DEFAULT_REGION=us-east-1 
+export AWS_DEFAULT_OUTPUT=json
+aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name elbow.fifo --attributes FifoQueue=true
+```
