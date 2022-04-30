@@ -2,8 +2,7 @@ package io.sqs.springsqproducer;
 
 import io.awspring.cloud.messaging.core.QueueMessagingTemplate;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -11,10 +10,10 @@ import java.util.Map;
 import java.util.UUID;
 
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class MessageSender {
-	private static final Logger log = LoggerFactory.getLogger(MessageSender.class);
 
 	private final QueueMessagingTemplate messagingTemplate;
 

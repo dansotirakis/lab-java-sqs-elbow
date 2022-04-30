@@ -10,7 +10,6 @@ export DS_USR=""
 mvn clean package 
 java -jar -Dspring.profiles.active=aws target/*.jar
 ```
-
 ## Run - localstack
 > Required database and localstack up
 ```shell
@@ -24,7 +23,6 @@ export DS_USR="root"
 mvn clean package 
 java -jar -Dspring.profiles.active=local target/*.jar
 ```
-
 ## CLI
 ### Sent message
 ```shell
@@ -40,4 +38,10 @@ aws sqs send-message \
 --message-group-id "$RANDOM" \
 --message-deduplication-id "$RANDOM" \
 --message-attributes file://src/main/resources/cli/aws-sqs-attributes.json
+```
+## Run tests and view jacoco report at Browser (Google Chrome)
+```shell
+mvn clean package
+mvn jacoco:report
+google-chrome ~/_code/lab-java-sqs-elbow/producer/target/site/jacoco/index.html
 ```

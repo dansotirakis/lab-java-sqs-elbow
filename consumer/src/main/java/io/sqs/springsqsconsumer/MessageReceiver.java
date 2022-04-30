@@ -2,7 +2,6 @@ package io.sqs.springsqsconsumer;
 
 import io.awspring.cloud.messaging.listener.SqsMessageDeletionPolicy;
 import io.awspring.cloud.messaging.listener.annotation.SqsListener;
-import javassist.tools.rmi.ObjectNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.Header;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class MessageReceiver {
+
 	private final BookRepository bookRepository;
 
 	@SqsListener(value = "${aws.url.queue}", deletionPolicy = SqsMessageDeletionPolicy.ON_SUCCESS)
@@ -22,5 +22,6 @@ public class MessageReceiver {
 			log.warn("Error received message");
 		}
 	}
+
 
 }
