@@ -1,0 +1,16 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    username: sa
+    password: sa
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: none
+aws:
+  url:
+    queue: http://127.0.0.1:4566/000000000000/elbow.fifo
+

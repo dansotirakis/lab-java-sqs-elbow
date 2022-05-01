@@ -10,12 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-
 @Service
 @AllArgsConstructor
 public class MessageSender {
-	private static final Logger log = LoggerFactory.getLogger(MessageSender.class);
 
+	private static final Logger logger = LoggerFactory.getLogger(MessageSender.class.getName());
 	private final QueueMessagingTemplate messagingTemplate;
 
 	private final BookRepository bookRepository;
@@ -24,7 +23,7 @@ public class MessageSender {
 			Map<String, Object> headers = buildingHeaders(messageObject);
 			messagingTemplate.convertAndSend(queue, messageObject, headers);
 		} else {
-			log.warn("Object Not Found");
+			logger.warn("Object Not Found");
 		}
 	}
 

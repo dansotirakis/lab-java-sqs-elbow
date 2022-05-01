@@ -1,23 +1,17 @@
 package io.sqs.springsqsconsumer;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@SpringBootTest
-class BookProducerApplicationTests {
-	@Value("${aws.url.queue}")
-	private String QUEUE_NAME_FIFO;
-	private static final Logger logger = LoggerFactory.getLogger(BookProducerApplicationTests.class.getName());
-
-	@Test
-	void contextLoads() {
-	}
+@SpringBootTest(classes = BookConsumerApplication.class)
+@RunWith(SpringRunner.class)
+class BookConsumerApplicationTests {
 
 	@Test
-	void send_message() {
-		logger.info("test with message channel listener.");
+	public void applicationContextTest() {
+		BookConsumerApplication.main(new String[] {});
 	}
+
 }

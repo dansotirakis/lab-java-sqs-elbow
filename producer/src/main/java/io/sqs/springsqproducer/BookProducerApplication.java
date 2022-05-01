@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@SpringBootApplication
-@RestController
+
 @Component
+@RestController
+@SpringBootApplication
 @RequestMapping("/book")
 public class BookProducerApplication {
 
@@ -55,3 +56,4 @@ public class BookProducerApplication {
 	}
 
 }
+

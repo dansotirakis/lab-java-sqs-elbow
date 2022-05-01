@@ -9,19 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class BookProducerApplicationTests {
-	@Value("${aws.url.queue}")
-	private String QUEUE_NAME_FIFO;
-	private static final Logger logger = LoggerFactory.getLogger(BookProducerApplicationTests.class.getName());
-	@Autowired
-	private MessageSender messageSender;
-
 	@Test
-	void contextLoads() {
-	}
+	void contextLoads() {}
 
-	@Test
-	void send_message() {
-		logger.info("test with message channel.");
-		messageSender.sendBookForUpdate(new Book(1,"teste",150.5), QUEUE_NAME_FIFO);
-	}
 }
