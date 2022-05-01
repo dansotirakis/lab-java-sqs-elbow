@@ -2,19 +2,19 @@ package io.sqs.springsqproducer;
 
 import io.awspring.cloud.messaging.core.QueueMessagingTemplate;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-
-@Slf4j
 @Service
 @AllArgsConstructor
 public class MessageSender {
 
+	private static final Logger logger = LoggerFactory.getLogger(MessageSender.class.getName());
 	private final QueueMessagingTemplate messagingTemplate;
 
 	private final BookRepository bookRepository;
@@ -23,7 +23,7 @@ public class MessageSender {
 			Map<String, Object> headers = buildingHeaders(messageObject);
 			messagingTemplate.convertAndSend(queue, messageObject, headers);
 		} else {
-			log.warn("Object Not Found");
+			logger.warn("Object Not Found");
 		}
 	}
 
