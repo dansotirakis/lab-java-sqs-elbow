@@ -2,6 +2,7 @@ package io.sqs.springsqsconsumer;
 
 import io.awspring.cloud.messaging.listener.SqsMessageDeletionPolicy;
 import io.awspring.cloud.messaging.listener.annotation.SqsListener;
+import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +17,12 @@ public class MessageReceiver {
 	private final BookRepository bookRepository;
 
 	@SqsListener(value = "${aws.url.queue}", deletionPolicy = SqsMessageDeletionPolicy.ON_SUCCESS)
-	public void receiveMessageFifo(Book message, @Header("book-id") int bookId) {
+	public Book receiveMessageFifo(Book message, @Header("book-id") int bookId) throws Throwable {
 		if (bookRepository.existsById(bookId)) {
-			bookRepository.save(message);
+			return bookRepository.save(message);
 		} else {
 			logger.warn("Object not found {}", bookId);
+			throw new NotFoundException(String.valueOf(bookId));
 		}
 	}
 }
