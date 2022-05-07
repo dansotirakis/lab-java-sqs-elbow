@@ -38,10 +38,8 @@ export AWS_ACCESS_KEY_ID="FAKE"
 export AWS_DEFAULT_REGION=us-east-1
 aws --endpoint-url http://127.0.0.1:4566 sqs purge-queue --queue-url http://127.0.0.1:4566/000000000000/elbow.fifo
 ```
-
 ## Run tests and view jacoco report at Browser (Google Chrome)
 ```shell
-aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name elbow.fifo --attributes FifoQueue=true
 mvn clean package
 mvn jacoco:report
 google-chrome ~/_code/lab-java-sqs-elbow/consumer/target/site/jacoco/index.html

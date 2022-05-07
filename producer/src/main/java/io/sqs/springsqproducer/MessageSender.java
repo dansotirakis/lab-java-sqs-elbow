@@ -15,19 +15,22 @@ import java.util.UUID;
 public class MessageSender {
 
 	private static final Logger logger = LoggerFactory.getLogger(MessageSender.class.getName());
+
 	private final QueueMessagingTemplate messagingTemplate;
 
 	private final BookRepository bookRepository;
-	public void sendBookForUpdate(final Book messageObject, String queue) {
+
+	public Boolean sendBookForUpdate(final Book messageObject, String queue) {
 		if (bookRepository.existsById(messageObject.getId())) {
-			Map<String, Object> headers = buildingHeaders(messageObject);
-			messagingTemplate.convertAndSend(queue, messageObject, headers);
+			messagingTemplate.convertAndSend(queue, messageObject, buildingHeaders(messageObject));
+			return true;
 		} else {
-			logger.warn("Object Not Found");
+			logger.warn("Object Not Found {}", messageObject.getId());
+			return Boolean.FALSE;
 		}
 	}
 
-	private Map<String, Object> buildingHeaders(Book messageObject) {
+	public Map<String, Object> buildingHeaders(Book messageObject) {
 		Map<String, Object> headers = new HashMap<>();
 		headers.put("message-group-id", UUID.randomUUID().toString());
 		headers.put("message-deduplication-id", UUID.randomUUID().toString());
