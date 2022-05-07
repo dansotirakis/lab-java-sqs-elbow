@@ -20,3 +20,5 @@ consumer/consumer-sqs.iml
 *.iml
 
 set-env.sh
+
+~$SqsSpringElbow.drawio.bkp
