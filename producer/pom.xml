@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.5</version>
+		<version>2.6.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.sqs</groupId>
@@ -32,10 +32,9 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<!--https://docs.awspring.io/spring-cloud-aws/docs/current/reference/html/index.html-->
 		<dependency>
 			<groupId>io.awspring.cloud</groupId>
 			<artifactId>spring-cloud-starter-aws-messaging</artifactId>
@@ -45,7 +44,6 @@
 			<artifactId>spring-cloud-starter-aws-jdbc</artifactId>
 			<version>2.4.1</version>
 		</dependency>
-		<!-- https://projectlombok.org/features/Data -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

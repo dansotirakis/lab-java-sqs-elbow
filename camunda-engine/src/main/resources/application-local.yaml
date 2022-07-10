@@ -1,0 +1,22 @@
+camunda:
+    bpm:
+      admin-user:
+        id: ${USR_CE}
+        password: ${PASS_CE}
+spring:
+  datasource:
+    username: ${DS_USR_CE}
+    url: ${DS_URL_CE}
+    password: ${DS_PASS_CE}
+    driver-class-name: org.postgresql.Driver
+book:
+  api:
+    url: ${BOOK_API_URL}
+feign:
+  client:
+    config:
+      postFeignClient:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: FULL
+        decode404: false
