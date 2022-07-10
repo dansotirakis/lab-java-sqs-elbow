@@ -1,21 +1,18 @@
 package io.sqs.springsqproducer;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
+@Component
 @RestController
-@NoArgsConstructor
 @AllArgsConstructor
 @RequestMapping("/book")
 public class BookProducerController {
-    @Value("${aws.url.queue}")
-    private String QUEUE_NAME_FIFO;
 
     private MessageSender messageSender;
 
@@ -40,7 +37,7 @@ public class BookProducerController {
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
     public String updateBook(@RequestBody Book book) {
-        return messageSender.sendBookForUpdate(book, QUEUE_NAME_FIFO) ?
+        return messageSender.sendBookForUpdate(book, System.getenv("QUEUE_URL")) ?
                 "Object sent to update" :
                 "Object not found and not sent for update";
     }

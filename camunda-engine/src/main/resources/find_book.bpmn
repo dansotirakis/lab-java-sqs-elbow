@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_069u2a0" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.17.0">
+  <bpmn:process id="processFindBook" name="findBook" isExecutable="true">
+    <bpmn:extensionElements />
+    <bpmn:sequenceFlow id="FlowNewBookForm" sourceRef="StartEventFindBook" targetRef="Book" />
+    <bpmn:endEvent id="EventFinishJourney">
+      <bpmn:incoming>Flow_0lqc71f</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="FlowFinishJourney" sourceRef="ActivityFindBook" targetRef="FinishJourney" />
+    <bpmn:sequenceFlow id="FlowNewBookSave" sourceRef="Book" targetRef="ActivityFindBook" />
+    <bpmn:userTask id="Book" name="Book">
+      <bpmn:documentation>Set a new book information's</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="book_id" label="Book name" type="string">
+            <camunda:properties />
+            <camunda:validation />
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>FlowNewBookForm</bpmn:incoming>
+      <bpmn:outgoing>FlowNewBookSave</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="ActivityFindBook" name="FindBook" camunda:delegateExpression="${findBookDelegate}">
+      <bpmn:extensionElements />
+      <bpmn:incoming>FlowNewBookSave</bpmn:incoming>
+      <bpmn:outgoing>FlowFinishJourney</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="StartEventFindBook" name="StartFindBoolk">
+      <bpmn:documentation>this element start event for creat a new book journey</bpmn:documentation>
+      <bpmn:outgoing>FlowNewBookForm</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0lqc71f" sourceRef="FinishJourney" targetRef="EventFinishJourney" />
+    <bpmn:userTask id="FinishJourney" name="FinishJourney">
+      <bpmn:incoming>FlowFinishJourney</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lqc71f</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmn:message id="Message_3h8cpq3" name="startNewBook" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="processFindBook">
+      <bpmndi:BPMNEdge id="Flow_0lqc71f_di" bpmnElement="Flow_0lqc71f">
+        <di:waypoint x="680" y="120" />
+        <di:waypoint x="732" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yiinvr_di" bpmnElement="FlowNewBookSave">
+        <di:waypoint x="400" y="120" />
+        <di:waypoint x="450" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j21lyy_di" bpmnElement="FlowFinishJourney">
+        <di:waypoint x="550" y="120" />
+        <di:waypoint x="580" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zz5kjg_di" bpmnElement="FlowNewBookForm">
+        <di:waypoint x="238" y="120" />
+        <di:waypoint x="300" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="71" y="102" width="7" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_07i1oyd_di" bpmnElement="EventFinishJourney">
+        <dc:Bounds x="732" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12iozjh_di" bpmnElement="Book">
+        <dc:Bounds x="300" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qkz2rj_di" bpmnElement="ActivityFindBook">
+        <dc:Bounds x="450" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0n78t98_di" bpmnElement="StartEventFindBook">
+        <dc:Bounds x="202" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="186" y="145" width="73" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10yrnpu_di" bpmnElement="FinishJourney">
+        <dc:Bounds x="580" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
