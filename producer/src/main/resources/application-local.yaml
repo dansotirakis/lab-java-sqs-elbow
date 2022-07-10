@@ -1,14 +1,25 @@
 server:
-  port: 8080
+  port: 8082
 spring:
   datasource:
+    driver-class-name: com.mysql.jdbc.Driver
     url: ${DS_URL}
     username: ${DS_USR}
     password: ${DS_PASS}
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
-      ddl-auto: create
-aws:
-  url:
-    queue: ${QUEUE_URL}
+      ddl-auto: update
+feign:
+  client:
+    config:
+      postFeignClient:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: FULL
+        decode404: false
+cloud:
+  aws:
+    sqs:
+      region: ${AWS_REGION}
+      endpoint: ${QUEUE_URL}

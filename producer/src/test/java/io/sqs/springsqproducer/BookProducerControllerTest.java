@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -14,8 +13,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 class BookProducerControllerTest {
 
-    @Value("${aws.url.queue}")
-    private String QUEUE_NAME_FIFO;
+    private static final String QUEUE_NAME_FIFO = System.getenv("${aws.url.queue}");
 
     static Book book;
 
@@ -39,7 +37,7 @@ class BookProducerControllerTest {
         Mockito.when(bookRepository.save(book)).thenReturn(book);
         Mockito.when(bookRepository.findAll()).thenReturn(books);
         Mockito.when(bookRepository.findById(any(Integer.class))).thenReturn(Optional.ofNullable(book));
-        bookProducerController = new BookProducerController(QUEUE_NAME_FIFO, messageSender, bookRepository);
+        bookProducerController = new BookProducerController(messageSender, bookRepository);
     }
 
     @Test

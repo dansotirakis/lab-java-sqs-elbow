@@ -1,0 +1,14 @@
+camunda:
+    bpm:
+      admin-user:
+        id:
+        password:
+spring:
+  datasource:
+    username:
+    url:
+    password:
+    driver-class-name:
+book:
+  api:
+    url:

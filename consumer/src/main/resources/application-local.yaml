@@ -2,6 +2,7 @@ server:
   port: 8081
 spring:
   datasource:
+    driver-class-name: com.mysql.jdbc.Driver
     url: ${DS_URL}
     username: ${DS_USR}
     password: ${DS_PASS}
@@ -9,7 +10,13 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       ddl-auto: none
-aws:
-  url:
-    queue: ${QUEUE_URL}
-
+cloud:
+  aws:
+    region:
+      static: ${AWS_REGION}
+    credentials:
+      access-key: ${AWS_ACCESS_KEY_ID}
+      secret-key: ${AWS_SECRET_ACCESS_KEY}
+    sqs:
+      region: ${AWS_REGION}
+      endpoint: ${QUEUE_URL}

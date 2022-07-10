@@ -1,0 +1,36 @@
+{
+  "components": [
+    {
+      "label": " Book Name",
+      "type": "textfield",
+      "id": "Field_0d89620",
+      "key": "book_name",
+      "description": "Book description"
+    },
+    {
+      "label": "Book Price",
+      "type": "number",
+      "id": "Field_15534gi",
+      "key": "book_price",
+      "defaultValue": 0,
+      "description": "Book price",
+      "properties": {}
+    },
+    {
+      "action": "submit",
+      "label": "Send to update",
+      "type": "button",
+      "id": "Field_0ik3jya",
+      "key": "field_1y6k6yw"
+    }
+  ],
+  "type": "default",
+  "id": "TextBookName",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.0.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.0.0"
+  },
+  "schemaVersion": 4
+}
