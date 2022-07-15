@@ -22,3 +22,5 @@ consumer/consumer-sqs.iml
 set-env.sh
 
 ~$SqsSpringElbow.drawio.bkp
+
+optimize-config/optimizeLicense.txt

@@ -1,6 +1,5 @@
 version: "3"
 services:
-  
   localstack:
     container_name: aws_sqs
     hostname: ${HOSTNAME_EXTERNAL}
@@ -16,8 +15,10 @@ services:
       - '4566:4566'
     volumes:
       - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
-  
-  database:
+    networks:
+      - elbow-network
+  database-book:
+    container_name: "database-book"
     image: mysql:8.0
     cap_add:
       - SYS_NICE
@@ -29,13 +30,14 @@ services:
     volumes:
       - db:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-  
-  producer:
-    container_name: elbow-producer
+    networks:
+      - elbow-network
+  book-producer:
+    container_name: book-producer
     build:
       context: ./producer/
       dockerfile: ./Dockerfile
-    image: elbow-producer:latest
+    image: book-producer:latest
     ports:
       - '8082:8082'
     environment:
@@ -47,13 +49,14 @@ services:
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - AWS_ACCESS_KEY_ID=${AWS_SECRET_ACCESS_KEY}
       - AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT}
-  
-  consumer:
-    container_name: elbow-consumer
+    networks:
+      - elbow-network
+  book-consumer:
+    container_name: book-consumer
     build:
       context: ./consumer/
       dockerfile: ./Dockerfile
-    image: elbow-consumer:latest
+    image: book-consumer:latest
     ports:
       - '8081:8081'
     environment:
@@ -66,15 +69,16 @@ services:
       - AWS_ACCESS_KEY_ID=${AWS_SECRET_ACCESS_KEY}
       - AWS_DEFAULT_OUTPUT=${AWS_DEFAULT_OUTPUT}
     links:
-      - database
+      - database-book
       - localstack
     depends_on:
-      - database
+      - database-book
       - localstack
     volumes:
       - chmod +x ./sqs_bootstrap.sh
-  
-  databace:
+    networks:
+      - elbow-network
+  database-engine:
     image: 'postgres:latest'
     ports:
       - '5432:5432'
@@ -84,7 +88,8 @@ services:
       POSTGRES_DB: ${DS_NAME_CE}
     volumes:
       - ./db-data/:/var/lib/postgresql/data/
-  
+    networks:
+      - elbow-network
   camunda:
     container_name: camunda-engine-elbow
     build:
@@ -101,12 +106,59 @@ services:
       - PASS_CE=${PASS_CE}
       - BOOK_API_URL=${BOOK_API_URL}
     depends_on:
-      - databace
-      - producer
+      - database-engine
+      - book-producer
       - localstack
     links:
-      - databace
-      - producer
+      - database-engine
+      - book-producer
+    networks:
+      - elbow-network
+  elasticsearch-elbow:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
+    container_name: elasticsearch-elbow
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - elbow-network
+  optimize-elbow:
+    container_name: optimize-elbow
+    image: 'registry.camunda.cloud/optimize-ee/optimize@sha256:6dd5b8a9ddc1962b77335e2e131e03fd6c3ca3ff7d1b32b51d023b69da3a0cde'
+    ports:
+      - "8083:8090"
+    environment:
+      - OPTIMIZE_ELASTICSEARCH_HTTP_PORT=${ELASTICSEARCH_HTTP_PORT}
+      - JAVA_OPTS=-Xms1g -Xmx1g -XX:MaxMetaspaceSize=256m
+      - OPTIMIZE_CAMUNDABPM_REST_URL=${OPTIMIZE_CAMUNDABPM_REST_URL}
+      - CAMUNDA_BPMN_URL=${CAMUNDA_BPMN_URL}
+      - OPTIMIZE_ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - JAVA_SYSTEM_PROPERTIES=-Xmx1024m
+    networks:
+      - elbow-network
+    depends_on:
+      - database-engine
+      - camunda
+      - elasticsearch-elbow
+    volumes:
+      - ./optimize-config/environment-config.yaml:/optimize/config/environment-config.yaml
+      - ./optimize-config/optimizeLicense.txt:/optimize/config/optimizeLicense.txt
+    links:
+      - "camunda:camunda"
 volumes:
   db:
     driver: local
+networks:
+  elbow-network:
