@@ -1,16 +1,20 @@
 FROM adoptopenjdk/openjdk11:jre-11.0.9.1_1-alpine@sha256:b6ab039066382d39cfc843914ef1fc624aa60e2a16ede433509ccadd6d995b1f
 RUN mkdir /app
-
+RUN apk add --no-cache python3 py3-pip && pip3 install --upgrade pip && pip3 install --no-cache-dir awscli && rm -rf /var/cache/apk/*
 ENV DS_PASS=$DS_PASS
 ENV DS_URL=$DS_URL
 ENV DS_USR=$DS_USR
 ENV QUEUE_URL=$QUEUE_URL
+ENV QUEUE_PROVIDER=$QUEUE_PROVIDER
+ENV QUEUE_NAME=$QUEUE_NAME
+ENV AWS_URL=$AWS_URL
 ENV AWS_REGION=$AWS_REGION
 ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 ENV AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_KEY
 ENV AWS_DEFAULT_OUTPUT=$AWS_DEFAULT_OUTPUT
-
+ENV BOOK_API_PRODUCER_PORT=$BOOK_API_PRODUCER_PORT
 COPY ./target/producer-sqs-0.0.2-SNAPSHOT.jar /java-application.jar
-EXPOSE 8082
 WORKDIR /usr/src/project
-CMD "java" "-jar"  "-Dspring.profiles.active=local" "/java-application.jar"
+COPY ./init.sh /init.sh
+EXPOSE $BOOK_API_PRODUCER_PORT
+ENTRYPOINT ["sh", "/init.sh"]

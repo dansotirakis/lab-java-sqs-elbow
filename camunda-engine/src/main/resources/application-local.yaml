@@ -1,13 +1,13 @@
 camunda:
     bpm:
       admin-user:
-        id: ${USR_CE}
-        password: ${PASS_CE}
+        id: ${CAMUNDA_USR}
+        password: ${CAMUNDA_PASS}
 spring:
   datasource:
-    username: ${DS_USR_CE}
-    url: ${DS_URL_CE}
-    password: ${DS_PASS_CE}
+    username: ${CAMUNDA_DS_USR}
+    url: ${CAMUNDA_URL}
+    password: ${CAMUNDA_DS_PASS}
     driver-class-name: org.postgresql.Driver
 book:
   api:

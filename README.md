@@ -10,9 +10,13 @@ The main features of the project is its ability to isolate part of the operation
 - Dockerized
 ### Phase 3
 - Worker
-- Optimized
-## Build 
-### Docker-compose
+- Optimized 
+## Docker-compose: Elbow Engine
 ```shell
-docker-compose --env-file env.local up -d --build
+ docker-compose --env-file env.elbow up -d --build
 ```
+---
+- [Camunda](http://localhost:8080/engine-rest/version)
+- [Consumer](http://localhost:8081/actuator/health)
+- [Producer](http://localhost:8082/actuator/health)
+- [Worker](#)
